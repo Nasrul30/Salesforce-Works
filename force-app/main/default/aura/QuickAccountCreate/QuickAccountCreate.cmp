@@ -1,0 +1,25 @@
+<aura:component controller="AccountController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    <!-- Attributes -->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="name" type="String" />
+    <aura:attribute name="phone" type="String" />
+    <aura:attribute name="industry" type="String" />
+    <aura:attribute name="errors" type="String[]" default="[]" />
+
+    <!-- Card UI -->
+    <lightning:card title="Create New Record">
+        <lightning:input label="Name" value="{!v.name}" required="true" />
+        <lightning:input label="Phone" value="{!v.phone}" type="tel" required="true" />
+        <lightning:input label="Industry" value="{!v.industry}" />
+
+        <!-- Error Messages -->
+        <aura:iteration items="{!v.errors}" var="error">
+            <div class="slds-text-color_error">{!error}</div>
+        </aura:iteration>
+
+        <!-- Buttons -->
+        <lightning:button label="Save" variant="brand" onclick="{!c.handleSave}" />
+        <lightning:button label="Cancel" variant="neutral" onclick="{!c.handleCancel}" />
+    </lightning:card>
+
+</aura:component>

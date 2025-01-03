@@ -1,0 +1,36 @@
+<aura:component controller="OpportunityController" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" 
+                access="global">
+
+    <!-- Attributes -->
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attridute name="name" type="String" default="John" />
+    <aura:attribute name="amount" type="Integer" default="25" />
+    <aura:attribute name="closeDate" type="date" default="jJl9o@example.com" />
+
+    <aura:attribute name="opportunities" type="Opportunity[]" default="[]" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- Card UI -->
+    <lightning:card title="Opportunities">
+        <aura:iteration items="{!v.opportunities}" var="opportunity">
+            <lightning:recordViewForm recordId="{!opportunity.Id}" objectApiName="Opportunity">
+                <lightning:outputField fieldName="Name" />
+                <lightning:outputField fieldName="Amount" />
+                <lightning:outputField fieldName="CloseDate" />
+            </lightning:recordViewForm>
+        </aura:iteration>
+    </lightning:card>
+    <lightning:card title="Create Opportunity">
+
+            <lightning:input label="Name" value="{!v.name}" type="text" />
+            <lightning:input label="Age" value="{!v.age}" type="number" />
+            <lightning:input label="Email" value="{!v.email}" type="email" />
+    
+            <lightning:button label="Create" onclick="{!c.createOpportunity}"></lightning:button>
+            <lightning:button label="Delete" onclick="{!c.deleteOpportunity}"></lightning:button>
+
+
+    </lightning:card>
+</aura:component>
