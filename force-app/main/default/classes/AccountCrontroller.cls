@@ -1,4 +1,4 @@
-public with sharing class AccountController {
+public with sharing class AccountCrontroller {
     @AuraEnabled
     public static Id saveRecord(String name, String phone, String industry) {
         if (String.isBlank(name) || String.isBlank(phone) || String.isBlank(industry)) {

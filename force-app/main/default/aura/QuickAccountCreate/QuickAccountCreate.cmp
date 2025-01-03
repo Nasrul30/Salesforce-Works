@@ -1,6 +1,5 @@
-<aura:component controller="AccountController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+<aura:component controller="AccountCrontroller" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes" access="global">
    
-
 <!-- Attributes -->
 <aura:attribute name="recordId" type="String" />
 <aura:attribute name="name" type="String" />
@@ -8,15 +7,20 @@
 <aura:attribute name="industry" type="String" />
 <aura:attribute name="industryOptions" type="List" />
 <aura:attribute name="errors" type="String[]" default="[]" />
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
 <!-- Card UI -->
-<lightning:card title="Create New Record">
-<lightning:input label="Name" value="{!v.name}" required="true" />
-<lightning:input label="Phone" value="{!v.phone}" type="tel" required="true" />
-<lightning:combobox name="industryPicklist" label="Industry" 
-                options="{!v.industryOptions}" 
-                value="{!v.industry}" 
-                placeholder="Select Industry" required="true" />
+    <lightning:card title="Create New Record">
+    <lightning:input label="Name" value="{!v.name}" required="true" />
+    <lightning:input label="Phone" value="{!v.phone}" type="tel" required="true" />
+    <lightning:combobox 
+        name="industryPicklist" 
+        label="Industry" 
+        options="{!v.industryOptions}" 
+        value="{!v.industry}" 
+        placeholder="Select Industry" 
+        required="true" />
+
 
 <!-- Error Messages -->
 <aura:iteration items="{!v.errors}" var="error">

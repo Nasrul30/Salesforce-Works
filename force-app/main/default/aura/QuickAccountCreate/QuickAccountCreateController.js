@@ -1,17 +1,23 @@
 ({
-    doInit: function (component, event, helper) {
-        // Fetch Industry picklist values
-        let action = component.get("c.getIndustryPicklistValues");
-        action.setCallback(this, function (response) {
-            let state = response.getState();
-            if (state === "SUCCESS") {
-                component.set("v.industryOptions", response.getReturnValue());
-            } else {
-                console.error("Failed to fetch picklist values: ", response.getError());
-            }
-        });
-        $A.enqueueAction(action);
-    },
+    
+        doInit: function (component, event, helper) {
+            console.log("Fetching Industry picklist values...");
+            let action = component.get("c.getIndustryPicklistValues");
+            action.setCallback(this, function (response) {
+                let state = response.getState();
+                console.log("Response state: " + state);
+                if (state === "SUCCESS") {
+                    let industryOptions = response.getReturnValue();
+                    console.log("Picklist options: ", industryOptions);
+                    component.set("v.industryOptions", industryOptions);
+                } else {
+                    console.error("Failed to fetch picklist values: ", response.getError());
+                }
+            });
+            $A.enqueueAction(action);
+        },
+    
+    
 
     handleSave: function (component, event, helper) {
         let name = component.get("v.name");
