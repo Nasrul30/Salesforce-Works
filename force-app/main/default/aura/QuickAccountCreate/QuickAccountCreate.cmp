@@ -28,6 +28,7 @@
 </aura:iteration>
 
 <!-- Buttons -->
+ 
 <lightning:button label="Save" variant="brand" onclick="{!c.handleSave}" />
 <lightning:button label="Cancel" variant="neutral" onclick="{!c.handleCancel}" />
 </lightning:card>
