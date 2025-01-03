@@ -1,8 +1,19 @@
 ({
+    doInit: function (component, event, helper) {
+        // Fetch Industry picklist values
+        let action = component.get("c.getIndustryPicklistValues");
+        action.setCallback(this, function (response) {
+            let state = response.getState();
+            if (state === "SUCCESS") {
+                component.set("v.industryOptions", response.getReturnValue());
+            } else {
+                console.error("Failed to fetch picklist values: ", response.getError());
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
     handleSave: function (component, event, helper) {
-
-        console.log('I am from a handleSave');
-
         let name = component.get("v.name");
         let phone = component.get("v.phone");
         let industry = component.get("v.industry");
@@ -17,6 +28,9 @@
         } else if (!/^\d{10}$/.test(phone)) {
             errors.push("Phone must be 10 digits.");
         }
+        if (!industry) {
+            errors.push("Industry is required.");
+        }
 
         component.set("v.errors", errors);
 
@@ -26,14 +40,13 @@
         }
 
         // Call Apex to save the record
-        console.log('before handle save');
         let action = component.get("c.saveRecord");
         action.setParams({
             name: name,
             phone: phone,
             industry: industry
         });
-        console.log('after handle save');
+
         action.setCallback(this, function (response) {
             let state = response.getState();
             if (state === "SUCCESS") {
@@ -58,6 +71,3 @@
         });
     }
 });
-
-
-

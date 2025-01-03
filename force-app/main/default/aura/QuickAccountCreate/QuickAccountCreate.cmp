@@ -1,25 +1,33 @@
 <aura:component controller="AccountController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
-    <!-- Attributes -->
-    <aura:attribute name="recordId" type="String" />
-    <aura:attribute name="name" type="String" />
-    <aura:attribute name="phone" type="String" />
-    <aura:attribute name="industry" type="String" />
-    <aura:attribute name="errors" type="String[]" default="[]" />
+   
 
-    <!-- Card UI -->
-    <lightning:card title="Create New Record">
-        <lightning:input label="Name" value="{!v.name}" required="true" />
-        <lightning:input label="Phone" value="{!v.phone}" type="tel" required="true" />
-        <lightning:input label="Industry" value="{!v.industry}" />
+<!-- Attributes -->
+<aura:attribute name="recordId" type="String" />
+<aura:attribute name="name" type="String" />
+<aura:attribute name="phone" type="String" />
+<aura:attribute name="industry" type="String" />
+<aura:attribute name="industryOptions" type="List" />
+<aura:attribute name="errors" type="String[]" default="[]" />
 
-        <!-- Error Messages -->
-        <aura:iteration items="{!v.errors}" var="error">
-            <div class="slds-text-color_error">{!error}</div>
-        </aura:iteration>
+<!-- Card UI -->
+<lightning:card title="Create New Record">
+<lightning:input label="Name" value="{!v.name}" required="true" />
+<lightning:input label="Phone" value="{!v.phone}" type="tel" required="true" />
+<lightning:combobox name="industryPicklist" label="Industry" 
+                options="{!v.industryOptions}" 
+                value="{!v.industry}" 
+                placeholder="Select Industry" required="true" />
 
-        <!-- Buttons -->
-        <lightning:button label="Save" variant="brand" onclick="{!c.handleSave}" />
-        <lightning:button label="Cancel" variant="neutral" onclick="{!c.handleCancel}" />
-    </lightning:card>
+<!-- Error Messages -->
+<aura:iteration items="{!v.errors}" var="error">
+<div class="slds-text-color_error">{!error}</div>
+</aura:iteration>
+
+<!-- Buttons -->
+<lightning:button label="Save" variant="brand" onclick="{!c.handleSave}" />
+<lightning:button label="Cancel" variant="neutral" onclick="{!c.handleCancel}" />
+</lightning:card>
+
+
 
 </aura:component>
