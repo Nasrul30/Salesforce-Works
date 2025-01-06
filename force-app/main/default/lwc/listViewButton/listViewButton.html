@@ -1,0 +1,96 @@
+<!--
+  @description       : 
+  @author            : Nasul Hasan
+  @group             : 
+  @last modified on  : 01-06-2025
+  @last modified by  : Nasul Hasan
+-->
+<template>
+    <!-- Button to show contacts modal -->
+    <lightning-button label="Show Contacts" onclick={showContactsModal}></lightning-button>
+
+    <!-- Modal implementation -->
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal Header -->
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Contact List</h2>
+                    <button
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close"
+                        onclick={closeContactsModal}
+                    >
+                        <lightning-icon icon-name="utility:close" alternative-text="Close"></lightning-icon>
+                    </button>
+                </header>
+
+                <!-- Modal Body -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={contacts}>
+
+                        <!-- Table View -->
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                            <thead>
+                                <tr class="slds-text-title_caps">
+                                    <th scope="col">
+                                        <div class="slds-truncate">
+                                            <lightning-input
+                                                type="checkbox"
+                                                checked={selectAllChecked}
+                                                onchange={handleSelectAllChange}
+                                            ></lightning-input>
+                                        </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Name</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Email</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Phone</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={contacts} for:item="contact">
+                                    <tr key={contact.Id}>
+                                        <td>
+                                            <lightning-input
+                                                type="checkbox"
+                                                data-id={contact.Id}
+                                                checked={contact.isChecked}
+                                                onchange={handleCheckboxChange}
+                                            ></lightning-input>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{contact.Name}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{contact.Email}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{contact.Phone}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                    <template if:false={contacts}>
+                        <p>No contacts available.</p>
+                    </template>
+                </div>
+
+                <!-- Modal Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Save" onclick={handleSave}></lightning-button>
+                    <lightning-button label="Close" onclick={closeContactsModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <!-- Backdrop -->
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
